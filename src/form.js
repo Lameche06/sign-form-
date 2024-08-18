@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios'; // Importer Axios
 import {
   Box,
   Flex,
@@ -60,31 +61,47 @@ const SignupForm = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validate();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
     } else {
-      console.log('Form Data:', formData);
-      toast({
-        title: "Inscription réussie.",
-        description: "Vos informations ont été soumises avec succès.",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-      });
-      // Réinitialiser le formulaire
-      setFormData({
-        nom: '',
-        prenom: '',
-        email: '',
-        address: '',
-        telephone: '',
-        dateOfBirth: '',
-        jobTitle: '',
-      });
-      setErrors({});
+      try {
+        // Appel à l'API avec Axios
+        const response = await axios.post(`http://localhost:4500/api/v1/profiles/create`, formData);
+
+        if (response.status === 201) {  // 201 Created
+          toast({
+            title: "Inscription réussie.",
+            description: "Vos informations ont été soumises avec succès.",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+          });
+
+          // Réinitialiser le formulaire
+          setFormData({
+            nom: '',
+            prenom: '',
+            email: '',
+            address: '',
+            telephone: '',
+            dateOfBirth: '',
+            jobTitle: '',
+          });
+          setErrors({});
+        }
+      } catch (error) {
+        // Gérer les erreurs de l'API
+        toast({
+          title: "Erreur d'inscription.",
+          description: error.response?.data?.message || "Une erreur s'est produite lors de l'envoi de vos informations.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
     }
   };
 
