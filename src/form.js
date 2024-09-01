@@ -25,7 +25,6 @@ const SignupForm = () => {
     email: '',
     location: '',
     telephone: '',
-    dateOfBirth: '',
     jobTitle: '',
     language: ''
   });
@@ -64,7 +63,6 @@ const SignupForm = () => {
           email: '',
           location: '',
           telephone: '',
-          dateOfBirth: '',
           jobTitle: '',
           language: ''
         });
@@ -168,17 +166,6 @@ const SignupForm = () => {
               </FormControl>
 
               <FormControl >
-                <FormLabel htmlFor="dateOfBirth">Date of birth</FormLabel>
-                <Input
-                  type="date"
-                  id="dateOfBirth"
-                  name="dateOfBirth"
-                  value={formData.dateOfBirth}
-                  onChange={handleChange}
-                />
-              </FormControl>
-
-              <FormControl >
                 <FormLabel htmlFor="jobTitle">Job title</FormLabel>
                 <Input
                   type="text"
@@ -200,7 +187,7 @@ const SignupForm = () => {
                 />
               </FormControl>
 
-              <Button type="submit" colorScheme="teal" size="md" mt={4} isLoading={loading}>
+              <Button type="submit" colorScheme="blue" size="md" mt={4} isLoading={loading}>
                 Register
               </Button>
             </Stack>
